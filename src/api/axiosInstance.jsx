@@ -3,7 +3,8 @@ import {logout, setAccessToken} from "../redux/features/loginSlice.js";
 import {store} from "../redux/store.js";
 
 const axiosInstance = axios.create({
-    baseURL: 'http://192.168.0.8:8081',
+    // baseURL: 'http://222.112.21.31:80',
+    baseURL: 'http://localhost:80',
     timeout: 20000,
     headers: {
         'Content-Type': 'application/json',
@@ -29,7 +30,7 @@ axiosInstance.interceptors.response.use(
 
             try {
                 // refresh token으로 새로운 access token 요청
-                const response = await axios.post('http://192.168.0.8:8081/api/user/auth/refresh', {}, {withCredentials: true});
+                const response = await axios.post('http://localhost:80/api/user/auth/refresh', {}, {withCredentials: true});
                 const newAccessToken = response.data.accessToken;
 
                 // 새 토큰 저장

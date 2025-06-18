@@ -7,6 +7,7 @@ export default defineConfig({
     // server:{
     //     '/api': 'http://localhost:8081'
     // },
+    base: '/',
     plugins: [
         react(),
         tailwindcss(),

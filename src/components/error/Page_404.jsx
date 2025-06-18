@@ -20,10 +20,6 @@ const Page_404 = () => {
                             로그인 화면으로 가기
                         </a>
                         <Link to={"/"}>
-                            <div>
-                                aaa
-
-                            </div>
                         </Link>
                     </div>
                 </div>
