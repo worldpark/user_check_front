@@ -51,7 +51,7 @@ export default function LoginForm() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-blue-400">
             <div
-                className="p-6 rounded-2xl shadow-lg max-w-sm space-y-4 bg-sky-700"
+                className="p-6 rounded-2xl shadow-lg max-w-sm space-y-4 bg-sky-700 w-[80%]"
             >
                 <h2 className="text-2xl font-bold text-center text-white">로그인</h2>
 
@@ -84,7 +84,7 @@ export default function LoginForm() {
                     />
                 </div>
 
-                <p className='text-red-300'>{message}</p>
+                <p className='text-red-300 whitespace-normal min-w-[211px]'>{message}</p>
 
                 <button
                     type="submit"
