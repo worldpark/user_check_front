@@ -28,7 +28,7 @@ const UserCheckStatus = () => {
     }
 
     const userCheck = () => {
-        if(distance <= 2000){
+        if(distance <= 200){
             attendanceCheck();
         }else{
             alert("출석 가능 범위를 벗어났습니다.");
@@ -44,6 +44,7 @@ const UserCheckStatus = () => {
         }).then(() => {
             alert("출석 처리 되었습니다.");
             setOpenCheckDialog(false);
+            getUserCheckStatus();
 
         }).catch((error) => {
             console.log(error);
@@ -57,7 +58,7 @@ const UserCheckStatus = () => {
             }
         }).then((response) => {
 
-            if(attendanceResponses.size > 0){
+            if(response.data.attendanceResponses.length > 0){
                 setUserInfo(response.data.attendanceResponses[0]);
             }
 
@@ -95,26 +96,24 @@ const UserCheckStatus = () => {
 
                 {
                     userInfo.attendanceId === "" ?
-                        <p>오늘 출결이 존재하지 않습니다.</p>
+                        <p>오늘 출결이 존재하지 않습니다.{userInfo.attendanceId}</p>
                         : <InfoBox
                             info={infoBoxData}
                         />
                 }
 
-
                 {
-                    userInfo.checkTime !== null || userInfo.checkTime !== ""?
-                        <></>
-                        : <>
-                            <button
-                                className="btn btn-primary mt-5"
-                                onClick={() => setOpenCheckDialog(true)}
-                            >
-                                출석하기
-                            </button>
-                        </>
+                     userInfo.attendanceId !== "" && (userInfo.checkTime === null || userInfo.checkTime === "")?
+                         <>
+                             <button
+                                 className="btn btn-primary mt-5"
+                                 onClick={() => setOpenCheckDialog(true)}
+                             >
+                                 출석하기
+                             </button>
+                         </>
+                        : <></>
                 }
-
 
                 <Dialog
                     open={openCheckDialog}

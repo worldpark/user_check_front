@@ -137,15 +137,16 @@ const AdminCheckJoin = () => {
         )
     }
     const [colDefs, setColDefs] = useState([
-        { headerName: '순번', field: "rowNumber", flex: 1 },
-        { headerName: '이름', field: "name", flex: 1 },
-        { headerName: '아이디', field: "username", flex: 1 },
+        { headerName: '순번', field: "rowNumber", flex: 4 },
+        { headerName: '이름', field: "name", flex: 7 },
+        { headerName: '아이디', field: "username", flex: 7 },
         {
             headerName: "삭제",
-            minWidth: 150,
+            minWidth: 100,
             cellRenderer: removeCellRenderer,
             editable: false,
-            colId: "action"
+            colId: "action",
+            flex: 2
         }
     ]);
 
@@ -196,12 +197,14 @@ const AdminCheckJoin = () => {
                     </div>
                 </div>
 
-                <AgGridReact
-                    rowData={rowDatas}
-                    columnDefs={colDefs}
-                    onCellClicked={onCellClicked}
-                    onGridReady={onGridReady}
-                />
+                <div className='h-[400px]'>
+                    <AgGridReact
+                        rowData={rowDatas}
+                        columnDefs={colDefs}
+                        onCellClicked={onCellClicked}
+                        onGridReady={onGridReady}
+                    />
+                </div>
             </div>
             <div className="divider lg:divider-horizontal"></div>
             <div id='rightContent' className='w-full flex flex-2 flex-col px-2 pb-2'>
