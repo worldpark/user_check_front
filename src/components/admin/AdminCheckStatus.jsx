@@ -52,8 +52,17 @@ const AdminCheckStatus = () => {
     }, [dateFilter]);
 
     const readAttendances = () => {
-        const isoDateStr = dateFilter.toISOString().replace("Z", "");
-        const url = '/api/admin/attendance?timestamp=' + encodeURIComponent(isoDateStr) + '&page=' + page;
+        const kstString = new Intl.DateTimeFormat('sv-SE', {
+            timeZone: 'Asia/Seoul',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        }).format(dateFilter).replace(' ', 'T');
+
+        const url = '/api/admin/attendance?timestamp=' + encodeURIComponent(kstString) + '&page=' + page;
 
         axios.get(url, {
             headers: {
