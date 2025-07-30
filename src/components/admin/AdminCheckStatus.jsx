@@ -5,6 +5,8 @@ import ServerSideGrid from "../ui/ServerSideGrid.jsx";
 import axios from "@/api/axiosInstance.jsx";
 import {useSelector} from "react-redux";
 import StatDisplay from "@components/ui/StatDisplay.jsx";
+import {socketOpen, socketClose} from "@/common/SocketProcess.js";
+
 
 const AdminCheckStatus = () => {
     const [dateFilter,  setDateFilter] = useState(new Date());
@@ -100,6 +102,21 @@ const AdminCheckStatus = () => {
         });
     }
 
+    useEffect(() => {
+
+        socketOpen("http://localhost:8080/ws?token=" + loginInfo.token, loginInfo.token, (socketMessage) => {
+            if(socketMessage.sender == 'System' && socketMessage.content == 'Data refresh'){
+
+                readAttendances();
+                readAttendanceSummary();
+            }
+        });
+
+        return() => {
+            socketClose();
+        }
+    }, []);
+
     return(
         <div className='flex flex-col'>
             <div className='mx-auto'>
@@ -121,20 +138,6 @@ const AdminCheckStatus = () => {
 
                     <div className='flex my-5'>
                         <div className='flex mx-auto flex-col lg:flex-row'>
-                            {/*<Progress data={{*/}
-                            {/*    'value': 30,*/}
-                            {/*    'color': 'text-blue-500',*/}
-                            {/*    'name': '출석',*/}
-                            {/*    'subContent': '3명'*/}
-                            {/*}}*/}
-                            {/*/>*/}
-                            {/*<Progress data={{*/}
-                            {/*    'color': 'text-red-500',*/}
-                            {/*    'subContent': '7명',*/}
-                            {/*    'value': 70,*/}
-                            {/*    'name': '결석'*/}
-                            {/*}}*/}
-                            {/*/>*/}
                             <StatDisplay
                                 statData={progressData}
                             />

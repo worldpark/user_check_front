@@ -8,7 +8,3 @@ export const deleteArrayToValue = (array, deleteValue) => {
 
     return filtered;
 }
-
-// module.exports = {
-//     deleteArrayToValue: deleteArrayToValue
-// }

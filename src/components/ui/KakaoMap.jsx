@@ -38,9 +38,6 @@ const KakaoMap = (props) => {
 
     const getDistance = (userPosition, lat, lon) => {
 
-        console.log(userPosition);
-        console.log(lat + ", " + lon);
-
         const R = 6371e3;
         const dLat = (lat - userPosition.userLat) * (Math.PI / 180);
         const dLon = (lon - userPosition.userLng) * (Math.PI / 180);

@@ -1,12 +1,24 @@
-import {logout} from "../../redux/features/loginSlice.js";
-import {useDispatch} from "react-redux";
+import {kakaoLogout, logout} from "../../redux/features/loginSlice.js";
+import {useDispatch, useSelector} from "react-redux";
+import axios from "@/api/axiosInstance.jsx";
 
 const BannerAndHeader = (props) => {
 
+    const loginInfo = useSelector((state) => state.loginInfo);
     const dispatch = useDispatch();
 
     const logoutProcess = () => {
-        dispatch(logout());
+
+        axios.post("/api/logout", {
+        }).then(() => {
+            if(loginInfo.kakaoAccount){
+                dispatch(kakaoLogout());
+            }else{
+                dispatch(logout());
+            }
+        }).error(error => {
+            console.log(error);
+        })
     }
 
     const title = props.title;

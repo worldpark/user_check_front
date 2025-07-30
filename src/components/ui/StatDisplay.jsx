@@ -9,7 +9,7 @@ const StatDisplay = (props) => {
             {
                 props.statData != null ?
                     Object.entries(props.statData).map(([key, value], index) => (
-                        <div className="stat">
+                        <div className="stat" key={index}>
                             <div className={"stat-title " + value.color}>{value.name}</div>
                             <div className="stat-value">{value.value} 명</div>
                         </div>

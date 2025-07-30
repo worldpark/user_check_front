@@ -2,7 +2,8 @@ import {useState} from 'react';
 import axios from "../api/axiosInstance.jsx";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {login, logout} from "../redux/features/loginSlice.js";
+import {login, kakaoLogin} from "../redux/features/loginSlice.js";
+import KakaoLogin from "react-kakao-login";
 
 export default function LoginForm() {
     const [userId, setUserId] = useState('');
@@ -13,10 +14,10 @@ export default function LoginForm() {
 
     const [message, setMessage] = useState('');
 
-    const passwordEnterKeyDown = (e) => {
-        if (e.key === 'Enter') {
-            loginProcess();
-        }
+    const passwordEnterKeyDown = (e) => {if (e.key === 'Enter') {
+        loginProcess();
+    }
+
     }
 
     const loginProcess = () => {
@@ -47,6 +48,47 @@ export default function LoginForm() {
             console.log(error);
         });
     };
+
+    const javascriptKey = import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY;
+
+    const kakaoLoginProcess = (data) => {
+        localStorage.setItem('kakaoToken', data.response.access_token);
+
+        axios.post('/api/user/auth/kakao', {
+            accessToken: data.response.access_token
+        }).then((response) => {
+
+            let token = response.data.accessToken;
+            console.log(token);
+
+            axios.get('/api/user',{
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            }).then((response) => {
+
+                dispatch(kakaoLogin({
+                    username: response.data.username,
+                    role: response.data.role,
+                    token: token,
+                    isAuthenticated: true,
+                    kakaoAccount: true
+                }));
+
+            }).catch((error) => {
+                console.log(error);
+            });
+
+        }).catch((error) => {
+            setMessage(error.response.data.message);
+            console.log(error);
+        });
+    }
+
+    const kakaoLoginFail = (error) => {
+        alert("소셜 로그인에 실패하였습니다.");
+        console.log(error);
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-blue-400">
@@ -93,6 +135,15 @@ export default function LoginForm() {
                 >
                     로그인
                 </button>
+
+                {/*<div className='w-[100%] flex'>*/}
+                {/*    <KakaoLogin*/}
+                {/*        className='m-auto'*/}
+                {/*        token={javascriptKey}*/}
+                {/*        onSuccess={kakaoLoginProcess}*/}
+                {/*        onFail={kakaoLoginFail}*/}
+                {/*    />*/}
+                {/*</div>*/}
             </div>
         </div>
     );
