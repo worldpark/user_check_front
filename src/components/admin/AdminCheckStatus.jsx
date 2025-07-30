@@ -104,7 +104,7 @@ const AdminCheckStatus = () => {
 
     useEffect(() => {
 
-        socketOpen("http://localhost:8080/ws?token=" + loginInfo.token, loginInfo.token, (socketMessage) => {
+        socketOpen(import.meta.env.VITE_WEB_URL + "/ws?token=" + loginInfo.token, loginInfo.token, (socketMessage) => {
             if(socketMessage.sender == 'System' && socketMessage.content == 'Data refresh'){
 
                 readAttendances();

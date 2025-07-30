@@ -16,7 +16,7 @@ const BannerAndHeader = (props) => {
             }else{
                 dispatch(logout());
             }
-        }).error(error => {
+        }).catch(error => {
             console.log(error);
         })
     }
