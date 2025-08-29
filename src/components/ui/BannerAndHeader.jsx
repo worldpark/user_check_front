@@ -1,6 +1,9 @@
 import {kakaoLogout, logout} from "../../redux/features/loginSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "@/api/axiosInstance.jsx";
+import {Dialog, DialogContent, DialogTitle} from "@mui/material";
+import {useState} from "react";
+import ChatUI from "@components/ui/ChatUI.jsx";
 
 const BannerAndHeader = (props) => {
 
@@ -23,10 +26,18 @@ const BannerAndHeader = (props) => {
 
     const title = props.title;
 
+    const [chatOpen, setChatOpen] = useState(false);
+
     return(
         <>
-            <div className="text-right px-5 link link-info" onClick={() => logoutProcess()}>
-                로그아웃
+            <div className="flex px-5 link link-info w-full">
+                <div className="ml-auto" onClick={() => setChatOpen(true)}>
+                    AI 도우미 봇
+                </div>
+
+                <div className="px-5" onClick={() => logoutProcess()}>
+                    로그아웃
+                </div>
             </div>
 
             <div className="font-bold text-2xl h-30 flex lg:text-4xl">
@@ -34,6 +45,22 @@ const BannerAndHeader = (props) => {
                     {title}
                 </p>
             </div>
+
+            <Dialog
+                open={chatOpen}
+                onClose={() => setChatOpen(false)}
+                maxWidth={false}
+                keepMounted
+            >
+                <DialogTitle>
+                    AI 도우미 봇
+                </DialogTitle>
+                <DialogContent
+                    style={{height: '80vh', width: "60vw"}}
+                >
+                    <ChatUI/>
+                </DialogContent>
+            </Dialog>
         </>
     )
 }
