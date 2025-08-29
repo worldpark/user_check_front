@@ -30,12 +30,12 @@ const BannerAndHeader = (props) => {
 
     return(
         <>
-            <div className="flex px-5 link link-info w-full">
-                <div className="ml-auto" onClick={() => setChatOpen(true)}>
+            <div className="flex px-5 w-full">
+                <div className="ml-auto link link-info" onClick={() => setChatOpen(true)}>
                     AI 도우미 봇
                 </div>
 
-                <div className="px-5" onClick={() => logoutProcess()}>
+                <div className="px-5 link link-info" onClick={() => logoutProcess()}>
                     로그아웃
                 </div>
             </div>
