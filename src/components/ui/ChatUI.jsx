@@ -1,10 +1,14 @@
 import {useRef, useState} from "react";
+import {EventSourcePolyfill} from "event-source-polyfill";
+import {useSelector} from "react-redux";
 
 const ChatUI = () => {
     const [chatInputText, setChatInputText] = useState('');
     const [chatDisable, setChatDisable] = useState(false);
     const messageListRef = useRef(null);
     const inputArea = useRef(null);
+
+    const loginInfo = useSelector((state) => state.loginInfo);
 
     const chatInput = (event) => {
         if (event.key === 'Enter') {
@@ -52,7 +56,10 @@ const ChatUI = () => {
     }
 
     const getRagResponse = (message, responseDiv) => {
-        const eventSource = new EventSource(import.meta.env.VITE_WEB_URL + "/api/assistant?message=" + message, {
+        const eventSource = new EventSourcePolyfill(import.meta.env.VITE_WEB_URL + "/api/assistant?message=" + message, {
+            headers:{
+                Authorization: 'Bearer ' + loginInfo.token
+            },
             withCredentials: true
         });
 
